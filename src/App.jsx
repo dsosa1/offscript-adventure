@@ -21,24 +21,17 @@ const MODES = [
   {id:"family",label:"Family",icon:"👨‍👩‍👧"},
 ];
 
-const BG0="#1C1714", BG1="#231E1A", BG2="#2C2621", BG3="#362F29";
-const BR="#44392F", BR2="#574840";
-const T1="#F2EBE3", T2="#B8A99A", T3="#7A6A5E";
-const P="#FF6B4A", PL="#2E1A12";
-const NIGHT="#9B7FE8", NIGHTL="#1E1830";
-const DAY="#E8A838", DAYL="#271E08";
-const GREEN="#5DB87A", GREENL="#0E2018";
+const BG0="#1C1714",BG1="#231E1A",BG2="#2C2621",BG3="#362F29";
+const BR="#44392F",BR2="#574840";
+const T1="#F2EBE3",T2="#B8A99A",T3="#7A6A5E";
+const P="#FF6B4A",PL="#2E1A12";
+const NIGHT="#9B7FE8",NIGHTL="#1E1830";
+const DAY="#E8A838",DAYL="#271E08";
+const GREEN="#5DB87A",GREENL="#0E2018";
 
-function AbstractBg({color=P, opacity=0.07, seed=0}) {
-  const lines=Array.from({length:10},(_,i)=>{
-    const a=((i*37+seed*13)*Math.PI)/180;
-    return {x1:50+80*Math.cos(a),y1:50+80*Math.sin(a)};
-  });
-  const dots=Array.from({length:8},(_,i)=>{
-    const a=((i*45+seed*7)*Math.PI)/180;
-    const r=28+(i%3)*14;
-    return {cx:50+r*Math.cos(a),cy:50+r*Math.sin(a),r:i%2===0?2.5:1.2};
-  });
+function AbstractBg({color=P,opacity=0.07,seed=0}) {
+  const lines=Array.from({length:10},(_,i)=>{const a=((i*37+seed*13)*Math.PI)/180;return{x1:50+80*Math.cos(a),y1:50+80*Math.sin(a)};});
+  const dots=Array.from({length:8},(_,i)=>{const a=((i*45+seed*7)*Math.PI)/180;const r=28+(i%3)*14;return{cx:50+r*Math.cos(a),cy:50+r*Math.sin(a),r:i%2===0?2.5:1.2};});
   return (
     <svg viewBox="0 0 100 100" style={{position:"absolute",inset:0,width:"100%",height:"100%",opacity,pointerEvents:"none"}}>
       {lines.map((l,i)=><line key={i} x1="50" y1="50" x2={l.x1} y2={l.y1} stroke={color} strokeWidth={i%2===0?0.8:0.4}/>)}
@@ -52,28 +45,15 @@ function AbstractBg({color=P, opacity=0.07, seed=0}) {
 function AbstractStar({size=180}) {
   return (
     <svg viewBox="0 0 200 200" width={size} height={size} xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <radialGradient id="g1" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor={P} stopOpacity="0.2"/>
-          <stop offset="100%" stopColor={P} stopOpacity="0"/>
-        </radialGradient>
-      </defs>
+      <defs><radialGradient id="g1" cx="50%" cy="50%" r="50%"><stop offset="0%" stopColor={P} stopOpacity="0.2"/><stop offset="100%" stopColor={P} stopOpacity="0"/></radialGradient></defs>
       <circle cx="100" cy="100" r="90" fill="url(#g1)"/>
-      {[0,30,60,90,120,150,180,210,240,270,300,330].map((a,i)=>{
-        const rad=(a*Math.PI)/180;
-        return <line key={i} x1="100" y1="100" x2={100+85*Math.cos(rad)} y2={100+85*Math.sin(rad)} stroke={P} strokeWidth={i%2===0?1.5:0.7} strokeOpacity={i%2===0?0.75:0.25}/>;
-      })}
-      {[0,45,90,135,180,225,270,315].map((a,i)=>{
-        const r=58+(i%3)*10,rad=(a*Math.PI)/180;
-        return <circle key={i} cx={100+r*Math.cos(rad)} cy={100+r*Math.sin(rad)} r={i%2===0?3:1.5} fill={P} fillOpacity={i%2===0?0.7:0.35}/>;
-      })}
-      {[0,60,120,180,240,300].map((a,i)=>{
-        const r=40,rad=(a*Math.PI)/180,rad2=((a+60)*Math.PI)/180;
-        return <line key={i} x1={100+r*Math.cos(rad)} y1={100+r*Math.sin(rad)} x2={100+r*Math.cos(rad2)} y2={100+r*Math.sin(rad2)} stroke={NIGHT} strokeWidth="1" strokeOpacity="0.45"/>;
-      })}
-      {[20,40,62,80].map((r,i)=>(
-        <circle key={i} cx="100" cy="100" r={r} fill="none" stroke={i%2===0?P:NIGHT} strokeWidth="0.5" strokeOpacity={0.1+i*0.04} strokeDasharray={i%2===0?"4 4":"2 6"}/>
-      ))}
+      {[0,30,60,90,120,150,180,210,240,270,300,330].map((a,i)=>{const rad=(a*Math.PI)/180;return<line key={i} x1="100" y1="100" x2={100+85*Math.cos(rad)} y2={100+85*Math.sin(rad)} stroke={P} strokeWidth={i%2===0?1.5:0.7} strokeOpacity={i%2===0?0.75:0.25}/>;})
+      }
+      {[0,45,90,135,180,225,270,315].map((a,i)=>{const r=58+(i%3)*10,rad=(a*Math.PI)/180;return<circle key={i} cx={100+r*Math.cos(rad)} cy={100+r*Math.sin(rad)} r={i%2===0?3:1.5} fill={P} fillOpacity={i%2===0?0.7:0.35}/>;})
+      }
+      {[0,60,120,180,240,300].map((a,i)=>{const r=40,rad=(a*Math.PI)/180,rad2=((a+60)*Math.PI)/180;return<line key={i} x1={100+r*Math.cos(rad)} y1={100+r*Math.sin(rad)} x2={100+r*Math.cos(rad2)} y2={100+r*Math.sin(rad2)} stroke={NIGHT} strokeWidth="1" strokeOpacity="0.45"/>;})
+      }
+      {[20,40,62,80].map((r,i)=><circle key={i} cx="100" cy="100" r={r} fill="none" stroke={i%2===0?P:NIGHT} strokeWidth="0.5" strokeOpacity={0.1+i*0.04} strokeDasharray={i%2===0?"4 4":"2 6"}/>)}
       <circle cx="100" cy="100" r="10" fill={P} fillOpacity="0.85"/>
       <circle cx="100" cy="100" r="5" fill={T1} fillOpacity="0.9"/>
     </svg>
@@ -81,19 +61,13 @@ function AbstractStar({size=180}) {
 }
 
 function MiniStar({color=P,size=60,seed=0}) {
-  const pts=Array.from({length:8},(_,i)=>{
-    const a=((i*45+seed)*Math.PI)/180;
-    const r=i%2===0?size*0.44:size*0.2;
-    return `${size/2+r*Math.cos(a)},${size/2+r*Math.sin(a)}`;
-  }).join(" ");
+  const pts=Array.from({length:8},(_,i)=>{const a=((i*45+seed)*Math.PI)/180;const r=i%2===0?size*0.44:size*0.2;return`${size/2+r*Math.cos(a)},${size/2+r*Math.sin(a)}`;}).join(" ");
   const rings=[0.18,0.32,0.44].map((f,i)=>({r:size*f,dash:i%2===0?"3 3":"1.5 4",stroke:i%2===0?color:NIGHT}));
   return (
     <svg viewBox={`0 0 ${size} ${size}`} width={size} height={size} style={{opacity:0.85,flexShrink:0}}>
       {rings.map((r,i)=><circle key={i} cx={size/2} cy={size/2} r={r.r} fill="none" stroke={r.stroke} strokeWidth="0.6" strokeDasharray={r.dash} strokeOpacity="0.5"/>)}
-      {Array.from({length:6},(_,i)=>{
-        const a=(i*60*Math.PI)/180;
-        return <line key={i} x1={size/2} y1={size/2} x2={size/2+size*0.43*Math.cos(a)} y2={size/2+size*0.43*Math.sin(a)} stroke={color} strokeWidth="0.7" strokeOpacity="0.6"/>;
-      })}
+      {Array.from({length:6},(_,i)=>{const a=(i*60*Math.PI)/180;return<line key={i} x1={size/2} y1={size/2} x2={size/2+size*0.43*Math.cos(a)} y2={size/2+size*0.43*Math.sin(a)} stroke={color} strokeWidth="0.7" strokeOpacity="0.6"/>;})
+      }
       <polygon points={pts} fill={color} fillOpacity="0.12" stroke={color} strokeWidth="0.8"/>
       <circle cx={size/2} cy={size/2} r={size*0.07} fill={color} fillOpacity="0.85"/>
     </svg>
@@ -117,21 +91,13 @@ function PhoneFrame({children}) {
 
 function PrimaryBtn({onClick,children,disabled,color=P,style={}}) {
   return (
-    <button onClick={onClick} disabled={disabled} style={{
-      width:"100%",padding:"14px",borderRadius:14,border:"none",
-      background:disabled?BG2:color,color:disabled?T3:T1,
-      fontWeight:700,fontSize:15,cursor:disabled?"not-allowed":"pointer",
-      letterSpacing:"0.3px",transition:"all 0.15s",...style,
-    }}>{children}</button>
+    <button onClick={onClick} disabled={disabled} style={{width:"100%",padding:"14px",borderRadius:14,border:"none",background:disabled?BG2:color,color:disabled?T3:T1,fontWeight:700,fontSize:15,cursor:disabled?"not-allowed":"pointer",letterSpacing:"0.3px",transition:"all 0.15s",...style}}>{children}</button>
   );
 }
 
 function OutlineBtn({onClick,children,style={}}) {
   return (
-    <button onClick={onClick} style={{
-      width:"100%",padding:"13px",borderRadius:14,border:`1px solid ${BR2}`,
-      background:"transparent",color:T2,fontWeight:500,fontSize:14,cursor:"pointer",...style,
-    }}>{children}</button>
+    <button onClick={onClick} style={{width:"100%",padding:"13px",borderRadius:14,border:`1px solid ${BR2}`,background:"transparent",color:T2,fontWeight:500,fontSize:14,cursor:"pointer",...style}}>{children}</button>
   );
 }
 
@@ -174,13 +140,11 @@ function SplashScreen({onStart}) {
     <div style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",padding:"2rem",gap:"1.5rem",background:BG0}}>
       <AbstractStar/>
       <div style={{textAlign:"center"}}>
-        <div style={{fontSize:30,fontWeight:700,color:T1,letterSpacing:"-0.5px"}}>Spontaneous</div>
-        <div style={{fontSize:30,fontWeight:700,color:P,letterSpacing:"-0.5px"}}>Adventure</div>
-        <div style={{fontSize:14,color:T3,marginTop:10}}>One adventure. Zero planning.</div>
+        <div style={{fontSize:38,fontWeight:800,color:T1,letterSpacing:"-1px"}}>Offscript</div>
+        <div style={{fontSize:14,color:P,marginTop:8,fontWeight:600,letterSpacing:"0.5px",textTransform:"uppercase"}}>No plan. Just go.</div>
+        <div style={{fontSize:13,color:T3,marginTop:8,lineHeight:1.7}}>Discover what's around you,{"\n"}one hidden stop at a time.</div>
       </div>
-      <button onClick={onStart} style={{marginTop:"0.5rem",padding:"15px 52px",borderRadius:16,border:"none",background:P,color:T1,fontWeight:700,fontSize:16,cursor:"pointer"}}>
-        Let's go
-      </button>
+      <button onClick={onStart} style={{marginTop:"0.5rem",padding:"15px 52px",borderRadius:16,border:"none",background:P,color:T1,fontWeight:700,fontSize:16,cursor:"pointer"}}>I'm in</button>
     </div>
   );
 }
@@ -190,7 +154,7 @@ function LocationScreen({onDone}) {
   const canContinue=zip.trim().length>=3;
   return (
     <div style={{flex:1,display:"flex",flexDirection:"column",background:BG1}}>
-      <ScreenHeader step={1} title="Where are you?" sub="Enter your city or zip code" color={P}/>
+      <ScreenHeader step={1} title="Where are you?" sub="That's all we need." color={P}/>
       <div style={{flex:1,padding:"1rem 1.25rem",display:"flex",flexDirection:"column",gap:12}}>
         <div style={{position:"relative",overflow:"hidden",background:BG2,borderRadius:14,padding:"1rem",border:`1px solid ${BR}`}}>
           <AbstractBg color={P} opacity={0.07} seed={3}/>
@@ -213,12 +177,21 @@ function OnboardingScreen({onDone}) {
   const toggle=id=>setVibes(v=>v.includes(id)?v.filter(x=>x!==id):[...v,id]);
   return (
     <div style={{flex:1,display:"flex",flexDirection:"column",background:BG1}}>
-      <ScreenHeader step={2} title="About you" sub="We'll personalize every adventure" color={P}/>
+      <ScreenHeader step={2} title="Who's going?" sub="We'll do the rest." color={P}/>
       <div style={{flex:1,padding:"1rem 1.25rem",display:"flex",flexDirection:"column",gap:16,overflowY:"auto"}}>
         <div>
           <SectionLabel>Your age</SectionLabel>
-          <input type="number" placeholder="e.g. 28" value={age} onChange={e=>setAge(e.target.value)}
-            style={{width:"100%",padding:"12px 14px",borderRadius:12,border:`1px solid ${BR2}`,background:BG2,color:T1,fontSize:15,boxSizing:"border-box",outline:"none"}}/>
+          <div style={{position:"relative",overflow:"hidden",background:BG2,borderRadius:14,padding:"1rem",border:`1px solid ${BR}`}}>
+            <AbstractBg color={P} opacity={0.06} seed={11}/>
+            <div style={{position:"relative",zIndex:1}}>
+              <div style={{fontSize:12,color:T2,marginBottom:10,lineHeight:1.6}}>We use this to make sure every suggestion is right for you — no awkward bars for minors, no bounce houses for adults.</div>
+              <input type="number" placeholder="Enter your age" value={age} onChange={e=>setAge(e.target.value)} min="5" max="99"
+                style={{width:"100%",padding:"12px 14px",borderRadius:12,border:`1.5px solid ${age?P+"88":BR2}`,background:BG1,color:T1,fontSize:16,boxSizing:"border-box",outline:"none",transition:"border 0.2s"}}/>
+              {age&&parseInt(age)<18&&<div style={{fontSize:11,color:DAY,marginTop:8,fontWeight:600}}>🌟 We'll keep it fun and family-friendly.</div>}
+              {age&&parseInt(age)>=18&&parseInt(age)<25&&<div style={{fontSize:11,color:P,marginTop:8,fontWeight:600}}>🔥 Expect some bold picks.</div>}
+              {age&&parseInt(age)>=25&&<div style={{fontSize:11,color:NIGHT,marginTop:8,fontWeight:600}}>✨ Adventures tailored just for you.</div>}
+            </div>
+          </div>
         </div>
         <div>
           <SectionLabel>Who's going?</SectionLabel>
@@ -226,9 +199,7 @@ function OnboardingScreen({onDone}) {
             {MODES.map(m=>(
               <button key={m.id} onClick={()=>setMode(m.id)} style={{padding:"12px 8px",borderRadius:14,border:`1.5px solid ${mode===m.id?P+"88":BR}`,background:mode===m.id?PL:BG2,color:mode===m.id?P:T2,fontSize:13,fontWeight:mode===m.id?700:400,cursor:"pointer",transition:"all 0.15s",position:"relative",overflow:"hidden"}}>
                 {mode===m.id&&<AbstractBg color={P} opacity={0.08} seed={m.id.length}/>}
-                <div style={{position:"relative",zIndex:1}}>
-                  <div style={{fontSize:20,marginBottom:4}}>{m.icon}</div>{m.label}
-                </div>
+                <div style={{position:"relative",zIndex:1}}><div style={{fontSize:20,marginBottom:4}}>{m.icon}</div>{m.label}</div>
               </button>
             ))}
           </div>
@@ -262,7 +233,7 @@ function PlanScreen({onStart}) {
   const ac=timeOfDay==="night"?NIGHT:DAY;
   return (
     <div style={{flex:1,display:"flex",flexDirection:"column",background:BG1}}>
-      <ScreenHeader step={3} title="Plan your adventure" sub="When and how long?" color={ac}/>
+      <ScreenHeader step={3} title="One question." sub="How much time do you have?" color={ac}/>
       <div style={{flex:1,padding:"1rem 1.25rem",display:"flex",flexDirection:"column",gap:16,overflowY:"auto"}}>
         <div>
           <SectionLabel>Date</SectionLabel>
@@ -326,13 +297,7 @@ Time: ${tod}, Vibes: ${profile.vibes.join(", ")}${familyNote}
 Build ONE ${plan.timeOfDay==="night"?"evening":"daytime"} adventure with ${stopCount} stops using REAL places in ${location}. Use real names and addresses. For shows/movies/concerts set eventTime. For all stops include website if confident.
 Respond ONLY with raw JSON no markdown:
 {"title":"...","tagline":"...","stops":[{"num":1,"emoji":"🎨","type":"...","name":"...","detail":"...","duration":"...","distance":"...","map":"...","eventTime":null,"website":null}]}`;
-
-  // calls our serverless proxy instead of Anthropic directly
-  const res=await fetch("/api/claude",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1200,messages:[{role:"user",content:prompt}]}),
-  });
+  const res=await fetch("/api/claude",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1200,messages:[{role:"user",content:prompt}]})});
   if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||`API error ${res.status}`);}
   const data=await res.json();
   const tb=data.content?.find(b=>b.type==="text");
@@ -345,8 +310,7 @@ Respond ONLY with raw JSON no markdown:
 
 function LoadingScreen({location,profile,plan,onReady,onError}) {
   const [step,setStep]=useState(0);
-  const tod=plan?.timeOfDay==="night";
-  const steps=[`Scanning ${location}...`,tod?"Finding tonight's best spots...":"Finding today's top spots...","Matching your vibes...","Crafting your adventure..."];
+  const steps=[`Sealing your adventure in ${location}...`,"Locking in the best spots...","No peeking...","Almost ready — don't overthink it..."];
   useEffect(()=>{
     const t=setInterval(()=>setStep(s=>Math.min(s+1,steps.length-1)),1400);
     generateAdventure(location,profile,plan).then(onReady).catch(onError);
@@ -382,11 +346,8 @@ function InviteModal({onClose}) {
           </div>
           <input placeholder="Enter their code" value={friendCode} onChange={e=>setFriendCode(e.target.value.toUpperCase())}
             style={{width:"100%",padding:"11px 14px",borderRadius:10,border:`1px solid ${BR2}`,background:BG2,color:T1,fontSize:15,letterSpacing:6,marginBottom:10,boxSizing:"border-box",outline:"none"}}/>
-          {matched?(
-            <div style={{padding:"13px",borderRadius:12,background:GREENL,color:GREEN,fontWeight:700,fontSize:14,textAlign:"center",marginBottom:10}}>Vibes matched!</div>
-          ):(
-            <PrimaryBtn onClick={()=>setMatched(true)} disabled={friendCode.length<6} style={{marginBottom:8}}>Match vibes</PrimaryBtn>
-          )}
+          {matched?(<div style={{padding:"13px",borderRadius:12,background:GREENL,color:GREEN,fontWeight:700,fontSize:14,textAlign:"center",marginBottom:10}}>Vibes matched!</div>
+          ):(<PrimaryBtn onClick={()=>setMatched(true)} disabled={friendCode.length<6} style={{marginBottom:8}}>Match vibes</PrimaryBtn>)}
           <OutlineBtn onClick={onClose}>Close</OutlineBtn>
         </div>
       </div>
@@ -410,7 +371,7 @@ function AdventureScreen({adventure,plan,onReroll,rerollsLeft,onComplete}) {
             <span style={{background:BG2,color:T3,fontSize:10,padding:"3px 10px",borderRadius:20}}>{plan?.duration?.label}</span>
           </div>
           <div style={{fontSize:20,fontWeight:700,color:T1,lineHeight:1.2}}>{adventure.title}</div>
-          <div style={{fontSize:12,color:T2,marginTop:5}}>{adventure.tagline}</div>
+          <div style={{fontSize:12,color:T2,marginTop:5}}>Your adventure is locked and loaded. Follow the stops. Trust the plan.</div>
           <div style={{display:"flex",gap:8,marginTop:12}}>
             <button onClick={()=>setShowInvite(true)} style={{flex:1,padding:"9px",borderRadius:10,border:`1px solid ${BR}`,background:BG2,color:T2,fontSize:12,cursor:"pointer",fontWeight:500}}>Invite someone +</button>
             <button onClick={()=>setAgreed(true)} style={{flex:1,padding:"9px",borderRadius:10,border:"none",background:agreed?GREENL:ac,color:agreed?GREEN:T1,fontSize:12,cursor:"pointer",fontWeight:700}}>
@@ -428,7 +389,7 @@ function AdventureScreen({adventure,plan,onReroll,rerollsLeft,onComplete}) {
               {isLocked?(
                 <div style={{padding:"0.875rem 1rem",display:"flex",alignItems:"center",gap:10,position:"relative",zIndex:1}}>
                   <MiniStar color={BR2} size={34}/>
-                  <div><div style={{fontSize:12,fontWeight:600,color:T3}}>Stop {stop.num}</div><div style={{fontSize:11,color:T3}}>Arrive to unlock</div></div>
+                  <div><div style={{fontSize:12,fontWeight:600,color:T3}}>Stop {stop.num}</div><div style={{fontSize:11,color:T3}}>You'll see it when you get there.</div></div>
                 </div>
               ):(
                 <div style={{position:"relative",zIndex:1}}>
@@ -478,10 +439,40 @@ function AdventureScreen({adventure,plan,onReroll,rerollsLeft,onComplete}) {
       </div>
       <div style={{padding:"0.875rem 1rem 1.25rem",borderTop:`1px solid ${BR}`,background:BG0}}>
         <button onClick={onReroll} disabled={rerollsLeft===0} style={{width:"100%",padding:"12px",borderRadius:12,border:`1.5px solid ${rerollsLeft===0?BR:ac+"55"}`,background:"transparent",color:rerollsLeft===0?T3:ac,fontSize:13,fontWeight:700,cursor:rerollsLeft===0?"not-allowed":"pointer"}}>
-          🎲 Different adventure ({rerollsLeft} rerolls left)
+          {rerollsLeft===0?"No rerolls left — trust the plan":"🎲 Not feeling it? Use a reroll. ("+rerollsLeft+" left)"}
         </button>
       </div>
       {showInvite&&<InviteModal onClose={()=>setShowInvite(false)}/>}
+    </div>
+  );
+}
+
+function ShareCard({adventure,rating,journal}) {
+  const today=new Date().toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});
+  return (
+    <div style={{background:BG0,borderRadius:20,padding:"1.25rem",border:`1px solid ${BR}`,position:"relative",overflow:"hidden"}}>
+      <AbstractBg color={P} opacity={0.1} seed={77}/>
+      <div style={{position:"relative",zIndex:1}}>
+        <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:12}}>
+          <div style={{fontSize:20,fontWeight:800,color:T1,letterSpacing:"-0.5px"}}>Offscript</div>
+          <div style={{fontSize:11,color:P,fontWeight:700,letterSpacing:1,textTransform:"uppercase"}}>No plan. Just go.</div>
+        </div>
+        <div style={{fontSize:16,fontWeight:700,color:T1,marginBottom:4}}>{adventure?.title}</div>
+        <div style={{fontSize:11,color:T3,marginBottom:12}}>{today} · {"⭐".repeat(rating)}</div>
+        <div style={{display:"flex",flexDirection:"column",gap:6,marginBottom:12}}>
+          {adventure?.stops?.map((s,i)=>(
+            <div key={i} style={{display:"flex",alignItems:"center",gap:8}}>
+              <div style={{width:20,height:20,borderRadius:"50%",background:P,display:"flex",alignItems:"center",justifyContent:"center",fontSize:10,fontWeight:700,color:T1,flexShrink:0}}>{i+1}</div>
+              <div style={{fontSize:12,color:T2,fontWeight:500}}>{s.name}</div>
+            </div>
+          ))}
+        </div>
+        {journal&&<div style={{fontSize:12,color:T2,lineHeight:1.6,fontStyle:"italic",borderLeft:`2px solid ${P}`,paddingLeft:10,marginBottom:12}}>"{journal.slice(0,120)}{journal.length>120?"...":""}"</div>}
+        <div style={{display:"flex",alignItems:"center",gap:6,borderTop:`1px solid ${BR}`,paddingTop:10}}>
+          <MiniStar color={P} size={20}/>
+          <div style={{fontSize:10,color:T3}}>Discovered with Offscript</div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -494,17 +485,13 @@ function RecapScreen({adventure,onSave}) {
   const [journalLen,setJournalLen]=useState(0);
   const fileInputRef=useRef(null);
   const handleChange=e=>{journalRef.current=e.target.value;setJournalLen(e.target.value.length);};
-  const handlePhoto=e=>{
-    Array.from(e.target.files||[]).forEach(f=>{
-      const r=new FileReader();
-      r.onload=ev=>setPhotos(p=>[...p,ev.target.result]);
-      r.readAsDataURL(f);
-    });
-  };
-  const save=()=>{
-    if(!rating) return;
-    setSaved(true);
-    setTimeout(()=>onSave({adventure,journal:journalRef.current,rating,photos,date:new Date().toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})}),1500);
+  const handlePhoto=e=>{Array.from(e.target.files||[]).forEach(f=>{const r=new FileReader();r.onload=ev=>setPhotos(p=>[...p,ev.target.result]);r.readAsDataURL(f);});};
+  const today=new Date().toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});
+  const save=()=>{if(!rating)return;setSaved(true);setTimeout(()=>onSave({adventure,journal:journalRef.current,rating,photos,date:today}),1500);};
+  const handleShare=()=>{
+    const text=`🧭 Just went Offscript!\n\n"${adventure?.title}"\n\n${adventure?.stops?.map((s,i)=>`${i+1}. ${s.name}`).join("\n")}\n\n${journalRef.current?`"${journalRef.current.slice(0,100)}"\n\n`:""}No plan. Just go. — offscript.app`;
+    if(navigator.share){navigator.share({title:"My Offscript Adventure",text}).catch(()=>{});}
+    else{navigator.clipboard.writeText(text).then(()=>alert("Copied to clipboard! Paste anywhere to share.")).catch(()=>{});}
   };
   return (
     <div style={{flex:1,display:"flex",flexDirection:"column",background:BG1}}>
@@ -512,8 +499,8 @@ function RecapScreen({adventure,onSave}) {
         <AbstractBg color={GREEN} opacity={0.09} seed={22}/>
         <div style={{position:"relative",zIndex:1}}>
           <div style={{fontSize:10,color:GREEN,letterSpacing:2,textTransform:"uppercase",marginBottom:6,fontWeight:700}}>Recap</div>
-          <div style={{fontSize:20,fontWeight:700,color:T1,lineHeight:1.2}}>{adventure?.title}</div>
-          <div style={{fontSize:13,color:T2,marginTop:4}}>Today · How'd it go?</div>
+          <div style={{fontSize:20,fontWeight:700,color:T1,lineHeight:1.2}}>You did it.</div>
+          <div style={{fontSize:13,color:T2,marginTop:4}}>How'd it go?</div>
         </div>
       </div>
       <div style={{flex:1,padding:"1rem 1.25rem",display:"flex",flexDirection:"column",gap:16,overflowY:"auto"}}>
@@ -548,6 +535,14 @@ function RecapScreen({adventure,onSave}) {
           <textarea onChange={handleChange} placeholder="How was it? Any highlights or moments worth remembering?"
             style={{display:"block",width:"100%",minHeight:100,padding:"11px",borderRadius:12,border:`1px solid ${BR2}`,background:BG2,color:T1,fontSize:14,lineHeight:1.6,resize:"none",boxSizing:"border-box",fontFamily:"inherit",outline:"none"}}/>
           {journalLen>0&&<div style={{fontSize:10,color:T3,marginTop:4,textAlign:"right"}}>{journalLen} chars</div>}
+        </div>
+        <div>
+          <SectionLabel>Share your adventure</SectionLabel>
+          <ShareCard adventure={adventure} rating={rating} journal={journalRef.current}/>
+          <button onClick={handleShare} style={{width:"100%",marginTop:10,padding:"13px",borderRadius:13,border:`1.5px solid ${P}55`,background:"transparent",color:P,fontSize:14,fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",gap:8}}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={P} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            Share this adventure
+          </button>
         </div>
         {saved?(
           <div style={{padding:"13px",borderRadius:12,background:GREENL,color:GREEN,fontWeight:700,fontSize:14,textAlign:"center",border:`1px solid ${GREEN}44`}}>Saved to your vault! 🎉</div>
@@ -613,7 +608,7 @@ function VaultScreen({pastAdventures,onNewAdventure}) {
       <div style={{background:BG0,padding:"1rem 1.25rem 1.25rem",position:"relative",overflow:"hidden",flexShrink:0}}>
         <AbstractBg color={P} opacity={0.09} seed={99}/>
         <div style={{position:"relative",zIndex:1}}>
-          <div style={{fontSize:22,fontWeight:700,color:T1}}>Your adventure vault</div>
+          <div style={{fontSize:22,fontWeight:700,color:T1}}>Your Offscript vault</div>
           <div style={{fontSize:13,color:T2,marginTop:4}}>Every adventure, preserved</div>
           {pastAdventures.length>0&&(
             <div style={{display:"flex",gap:8,marginTop:14}}>
@@ -668,14 +663,8 @@ export default function App() {
   const [pastAdventures,setPastAdventures]=useState([]);
   const [aiError,setAiError]=useState(null);
   const showTabs=["adventure","vault","recap"].includes(screen);
-  const handleTabChange=t=>{
-    setTab(t);
-    if(t==="vault") setScreen("vault");
-    else setScreen(profile?"plan":"onboarding");
-  };
-  const handleReroll=()=>{
-    if(rerollsLeft>0){setRerollsLeft(r=>r-1);setAdventure(null);setAiError(null);setScreen("loading");}
-  };
+  const handleTabChange=t=>{setTab(t);if(t==="vault")setScreen("vault");else setScreen(profile?"plan":"onboarding");};
+  const handleReroll=()=>{if(rerollsLeft>0){setRerollsLeft(r=>r-1);setAdventure(null);setAiError(null);setScreen("loading");}};
   return (
     <PhoneFrame>
       <div style={{flex:1,display:"flex",flexDirection:"column",minHeight:0}}>
